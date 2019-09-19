@@ -1,7 +1,8 @@
-#include "Header.h"
+#include "Hash.h"
 
-#include <iostream>
-#include <iomanip>
+template <typename T=int> T cin_and_checkFormat_in_interval(double, double);
+template <typename T=string> T Failo_nuskaitymas(string);
+
 
 std::string int_to_hex(const int input) {
 
@@ -12,67 +13,74 @@ std::string int_to_hex(const int input) {
 	return stream.str();
 }
 
-class Hash {
-private:
-	vector<unsigned long long> CONSTANTS = {
-		0xab5722731751f35f, 0xd15ae0dfe36be708, 0xb4716cfb00ef9fa5,
-		0x52522227a83e3794, 0xedf51b1025ab4b73, 0xac681f0491e880ae,
-		0x37bb06739ddc1e6c, 0xa3d99386e02723d0, 0xee98570b0a2c86c0
-	};
-	string input;
-	unsigned long long hash;
-
-	int __getTotal() {
-		return std::accumulate(input.begin(), input.end(), 0);
-	}
-
-	void __shiftHash(int shiftNumber) {
-		hash <<= shiftNumber;
-	}
-	void __xorHash(char key) {
-		string xored = "";
-		for (int i = 0; i < input.size(); ++i) {
-			xored += input[i] ^ (int(key) + i) % 255;
-		}
-		input = xored;
-	}
-	
-
-public:
-	Hash(string input) : input(input), hash(CONSTANTS[__getTotal() % 9]) {}
-
-	unsigned long long getHash() const {
-		return hash;
-	}
-
-	void hashIt() {
-		std::cout << input << std::endl;
-		char xorChar = (__getTotal() % 9) + 60;
-		__xorHash(xorChar);
-		std::cout << input << std::endl;
-		int shiftNumber = 2;
-		__shiftHash(shiftNumber);
-
-
-	}
-
-
-};
-
 
 int main()
 {
-	Hash algo("LabaS");
+	int choice;
+	std::cout << "Programa hash'ina jusu pasirinkta simboliu eilute\n" << std::string(40, '=') << std::endl;
+	std::cout << "1 - Ivesti data rankomis;\n2 - Skaityti data is failo \"input.txt\";\n4 - Testai;\n" << std::string(40, '=') << std::endl;
+	choice = cin_and_checkFormat_in_interval(1, 3);
+
+	Hash algo;
+	string input;
+	try {
+		switch (choice) {
+		case 1: {
+			cin >> input;
+			algo.setInput(input);
+			algo.hashIt();
+			break;
+		}
+		case 2: {
+			input = Failo_nuskaitymas("input.txt");
+			algo.setInput(input);
+			algo.hashIt();
+			break;
+		}
+		case 3:
+		default:
+			std::cout << "Nepavyko pasirinkti." << std::endl;
+			break;
+		}
+	} catch (const std::runtime_error& e) {
+		std::cout << e.what() << std::endl;
+		exit(0);
+	}
+
+	Hash algo22("LabaS");
 	algo.hashIt();
-	std::cout << std::hex << algo.getHash() << std::endl;
+	std::cout << std::hex << algo22.getHash() << std::endl;
 
 	Hash algo1("labaS");
 	algo1.hashIt();
 	std::cout << std::hex << algo1.getHash() << std::endl;
-	//long long hex = 0xa3d99386e02723d0;
-	//int value = 0;
-	//std::cout << hex << std::endl;
-	//hex <<= 1;
-	//std::cout << hex << std::endl;
-	//std::cout << int_to_hex(value) << std::endl;
+}
+
+
+
+
+template <typename T> T cin_and_checkFormat_in_interval(double a, double b) {
+	T input;
+	while (!(cin >> input) || a > input || input > b) {
+		std::cout << "Netinkamas ivesties formatas. Iveskite is naujo: " << std::endl;
+		cin.clear();
+		cin.ignore(1000, '\n');
+	}
+	return input;
+}
+
+template <typename T> T Failo_nuskaitymas(string file_name) {
+	string input{};
+
+	std::ifstream failas(file_name.c_str());
+
+	if (failas.fail()) throw std::runtime_error("Nera tokio failo."); //jei nera failo
+
+	double balas_temp;
+	while (!failas.eof()) {
+		if ((!(failas >> input) || failas.fail() )) throw std::runtime_error("Blogas failo formatas."); // paieskoma ar formatas failo yra geras
+	}
+	failas.close();
+	return input;
+
 }
