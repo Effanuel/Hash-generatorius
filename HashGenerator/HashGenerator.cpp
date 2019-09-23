@@ -49,10 +49,10 @@ int main(int argc, char *argv[])
 				std::cout << "Iveskite string'a (be tarpu):" << std::endl;
 				cin >> input;
 
-				Hash algo{ {input} };
+				Hash algo{ vector<string>{input} };
 				algo.hashInput();
 				
-				std::cout << std::hex << algo.getHash()[0] << std::endl;
+				std::cout << "Hash: " << int_to_hex(algo.getHash()[0]) << std::endl;
 				break;
 			}
 			case 2: {
@@ -69,7 +69,7 @@ int main(int argc, char *argv[])
 				Hash algo{ input_arr };
 				algo.hashInput();
 				for (const auto& line : algo.getHash()) {
-					std::cout << std::hex << line << std::endl;
+					std::cout << int_to_hex(line) << std::endl;
 				}
 				break;
 			}
