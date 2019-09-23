@@ -1,86 +1,135 @@
-#include "Hash.h"
-
-template <typename T=int> T cin_and_checkFormat_in_interval(double, double);
-template <typename T=string> T Failo_nuskaitymas(string);
+#include "Header.h"
 
 
-std::string int_to_hex(const int input) {
-
-	std::stringstream stream;
-	stream << "0x" << std::setfill('0') << std::setw(sizeof(string) * 1)
-		<< std::hex << input;
-
-	return stream.str();
-}
 
 
-int main()
+int main(int argc, char *argv[])
 {
-	int choice;
-	std::cout << "Programa hash'ina jusu pasirinkta simboliu eilute\n" << std::string(40, '=') << std::endl;
-	std::cout << "1 - Ivesti data rankomis;\n2 - Skaityti data is failo \"input.txt\";\n4 - Testai;\n" << std::string(40, '=') << std::endl;
-	choice = cin_and_checkFormat_in_interval(1, 3);
-
-	Hash algo;
+	//vector<string> arr_1;
+	//vector<string> arr_2;
+	//pair_generator(arr_1, arr_2, 1000000);
+	//std::cout << "done" << std::endl;
+	////for (const auto& a: arr_1) {
+	////	std::cout << a << std::endl;
+	////}
+	////for (const auto& b : arr_2) {
+	////	std::cout << b << std::endl;
+	////}
+	vector<string> input_arr;
 	string input;
-	try {
-		switch (choice) {
-		case 1: {
-			cin >> input;
-			algo.setInput(input);
-			algo.hashIt();
-			break;
+	if (argc > 1) {
+		input = Failo_nuskaitymas(argv[1]);
+		input_arr.push_back(input);
+		Hash algo{ input_arr };
+		algo.hashInput();
+
+		std::cout << "Failo " << string(argv[1]) << " hash'intos eilutes:\n" << std::string(40, '=') << std::endl;
+		for (const auto& line : algo.getHash()) {
+			std::cout << std::hex << line << std::endl;
 		}
-		case 2: {
-			input = Failo_nuskaitymas("input.txt");
-			algo.setInput(input);
-			algo.hashIt();
-			break;
+	}
+	else if (argc == 1) {
+		std::cout << "Programa hash'ina jusu pasirinkta simboliu eilute(s)\n" << std::string(40, '=') << std::endl;
+		std::cout <<
+			"1 - Ivesti data rankomis;\n"
+			"2 - Hash'inti faila;\n"
+			"3 - Efektyvumas;\n"
+			"4 - Kriterijus;\n"
+			"5 - Reikalavimas 6;\n"
+			"6 - Reikalavimas 7;\n" << std::string(40, '=') << std::endl;
+		
+		int choice;
+		choice = cin_and_checkFormat_in_interval(1, 6);
+
+		
+		try {
+			switch (choice) {
+			case 1: {
+				string input;
+				std::cout << "Iveskite string'a (be tarpu):" << std::endl;
+				cin >> input;
+
+				Hash algo{ {input} };
+				algo.hashInput();
+				
+				std::cout << std::hex << algo.getHash()[0] << std::endl;
+				break;
+			}
+			case 2: {
+				
+				std::cout << "Iveskite failo pavadinima:" << std::endl;
+				
+				string file_name;
+				cin >> file_name;
+
+				string input;
+				input = Failo_nuskaitymas(file_name);
+				input_arr.push_back(input);
+
+				Hash algo{ input_arr };
+				algo.hashInput();
+				for (const auto& line : algo.getHash()) {
+					std::cout << std::hex << line << std::endl;
+				}
+				break;
+			}
+			case 3: {
+				input_arr = Failo_eiluciu_nuskaitymas("konstitucija.txt");	
+				Hash algo{ input_arr };
+
+				Timer laikas;
+				algo.hashInput(); // matuojame hash'inimo laika
+				std::cout << "Failo 'konstitucija.txt' eiluciu hash'inimas:\n" << laikas.elapsed() << " s" << std::endl; //end
+				break;
+			}
+			case 4: {
+				if (kriterijus()) {
+					std::cout << "OK." << std::endl;
+					break;
+				}
+				std::cout << "NOT OK." << std::endl;
+				break;
+			}
+			case 5: {
+				if (check_hash_uniqueness(10)) {
+
+					std::cout << "OK." << std::endl;
+					break;
+				}
+				std::cout << "NOT OK." << std::endl;
+				break;
+			}
+			case 6: {
+				calculateBits(1e6);
+				break;
+			}
+			default:
+				std::cout << "Nepavyko pasirinkti." << std::endl;
+				break;
+			}
+		} catch (const std::runtime_error& e) {
+			std::cout << e.what() << std::endl;
+			exit(0);
 		}
-		case 3:
-		default:
-			std::cout << "Nepavyko pasirinkti." << std::endl;
-			break;
-		}
-	} catch (const std::runtime_error& e) {
-		std::cout << e.what() << std::endl;
-		exit(0);
 	}
 
-	Hash algo22("LabaS");
-	algo.hashIt();
-	std::cout << std::hex << algo22.getHash() << std::endl;
+	//vector<string> input = { "Labas" };
+	//Hash algo22("a");
+	//algo22.__xorInput('x');
+	//std::ostringstream stream;
+	//stream <<std::hex<< algo22.getHash()[0];
+	//std::cout << stream.str() << std::endl;
 
-	Hash algo1("labaS");
-	algo1.hashIt();
-	std::cout << std::hex << algo1.getHash() << std::endl;
-}
+	//Hash algo23("ab");
+	//algo23.hashInput('x');
+	//for (const auto& a : algo23.getHash()) {
+	//	std::cout << std::hex << a << std::endl;
+	//}
 
-
-
-
-template <typename T> T cin_and_checkFormat_in_interval(double a, double b) {
-	T input;
-	while (!(cin >> input) || a > input || input > b) {
-		std::cout << "Netinkamas ivesties formatas. Iveskite is naujo: " << std::endl;
-		cin.clear();
-		cin.ignore(1000, '\n');
-	}
-	return input;
-}
-
-template <typename T> T Failo_nuskaitymas(string file_name) {
-	string input{};
-
-	std::ifstream failas(file_name.c_str());
-
-	if (failas.fail()) throw std::runtime_error("Nera tokio failo."); //jei nera failo
-
-	double balas_temp;
-	while (!failas.eof()) {
-		if ((!(failas >> input) || failas.fail() )) throw std::runtime_error("Blogas failo formatas."); // paieskoma ar formatas failo yra geras
-	}
-	failas.close();
-	return input;
+	//Hash algo22("aa");
+	//algo22.hashInput('x');
+	//for (const auto& a : algo22.getHash()) {
+	//	std::cout << std::hex << a << std::endl;
+	//}
 
 }

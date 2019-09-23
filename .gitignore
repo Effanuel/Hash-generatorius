@@ -1,4 +1,6 @@
 /Debug
+/Release
+*/Release
 *.sln
 */*.vcxproj
 */*.vcxproj.filters

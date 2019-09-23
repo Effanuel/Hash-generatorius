@@ -1,53 +1,88 @@
-#include "Header.h"
+#pragma once
+#include <numeric>
+#include <iomanip>
 
+#include <fstream>
+#include <sstream>
+#include <iostream>
+
+#include <string>
+#include <vector>
+#include <map>
+
+#include <chrono>
+#include <algorithm>
+#include <random>
+
+
+using std::string;
+using std::vector;
+using std::cin;
+
+typedef std::map<string, string> MAPstring;
+typedef std::map<uint64_t, uint64_t> MAPuint;
 
 
 class Hash {
+	typedef uint64_t ull;
 private:
-	vector<unsigned long long> CONSTANTS = {
-		0xab5722731751f35f, 0xd15ae0dfe36be708, 0xb4716cfb00ef9fa5,
-		0x52522227a83e3794, 0xedf51b1025ab4b73, 0xac681f0491e880ae,
-		0x37bb06739ddc1e6c, 0xa3d99386e02723d0, 0xee98570b0a2c86c0
+	vector<ull> CONSTANTS = {
+		0xac5722731741b35f, 0xd15ae0dfe36be708, 0xb4716cfb00ef9fa5,
+		0xad5721362153a25f, 0xedf51b1025ab4b73, 0xac681f0491e880ae,
+		0xb33700731453f351, 0xa3d99386e02723d0, 0xee98570b0a2c86c1
 	};
-	string input_;
-	string hashedInput_;
-	unsigned long long hash_;
+	vector<string> input_;
+	vector<ull> hashedInput_;
 
-	int __getTotal() {
-		return std::accumulate(input_.begin(), input_.end(), 0);
+	int __getTotal(string input) {
+		return std::accumulate(input.begin(), input.end(), 0);
 	}
 
-	void __shiftHash(int shiftNumber) {
-		hash_ <<= shiftNumber;
+	ull _mix(ull input, ull state) {
+		return ((input * state) + (state << 5)) ^ (input >> 3);
 	}
-	void __xorHash(char key) {
-		string xored = "";
-		for (unsigned int i = 0; i < input_.size(); ++i) {
-			xored += input_[i] ^ (int(key) + i) % 255;
-		}
-		input_ = xored;
-	}
-
 
 public:
-	Hash() : input_(""), hash_(CONSTANTS[__getTotal() % 9]) {}
-	Hash(string input) : input_(input), hash_(CONSTANTS[__getTotal() % 9]) {}
+	Hash(string input) : input_({ input }) {}
+	Hash(vector<string> input_arr) : input_(std::move(input_arr)) {}
 
-	unsigned long long getHash() const {
-		return hash_;
+	vector<ull> getHash() const {
+		return hashedInput_;
 	}
-
-	void hashIt() {
-		std::cout << input_ << std::endl;
-		char xorChar = (__getTotal() % 9) + 60;
-		__xorHash(xorChar);
-		std::cout << input_ << std::endl;
-		int shiftNumber = 2;
-		__shiftHash(shiftNumber);
+	ull stringToHex(string input) {
+		return std::stoll(input, 0, 0);
 	}
-	void setInput(string input) {
-		input_ = input;
+	void hashInput() {
+		ull A;
+		for (const auto& line : input_) {
+			A = CONSTANTS[1];
+			ull cons = 1;
+			for (unsigned int i = 0; i < line.size(); ++i) {
+				A = (A * __getTotal(line)) ^ (cons * ull(line[i]) * 76963);
+				cons = cons * int(line[i]) % int(1e5 + 1);
+			}
+			hashedInput_.push_back(_mix(A, 0xFEEDFACECAFEBEEF));
+
+		}
 	}
+};
 
-
+class Timer {
+private:
+	///Auksto tikslumo laikrodi
+	using hrClock = std::chrono::high_resolution_clock;
+	///Double trukmes skaiciavimas
+	using durationDouble = std::chrono::duration<long double>;
+	std::chrono::time_point<hrClock> start;
+public:
+	///Sukuria Timer() objekta, pradeda skaiciuoti laika
+	Timer() : start{ hrClock::now() } {}
+	///Pradeda skaiciuoti laika is pradziu
+	void reset() {
+		start = hrClock::now();
+	}
+	///Grazina laika nuo Timer() sukurimo/reset() iki sios funkcijos call
+	long double elapsed() const {
+		return durationDouble(hrClock::now() - start).count();
+	}
 };

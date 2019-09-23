@@ -1,0 +1,15 @@
+Ausikurkite testinia avedimo faila pavyzdaia, tokia kad:
+Bent du failai bata sudaryti tik ia vieno, taaiau skirtingo, simbolio.
+Bent du failai bata sudaryti ia daug visiakai skirtinga simbolia (> 100000 simbolia)
+Bent du failai bata sudaryti ia daug simbolia ir skirtasi vienas nuo kito tik vienu simboliu.
+Tuaaias failas Ir iaveskite output'us. Nepriklausomai nuo Input'o, Output'ai turi bati vienodo dydaio.
+Tokiu badu pademonstruosite, kad Jasa hash funkcija atitinka 1-3-a reikalavimus.
+Iatirkite Jasa sukurtos hash funkcijos efektyvuma: tuo tikslu suhash'uokite kiekviena eiluta ia konstitucija.txt failo.
+Reikta aia matuoti, tik hash'avimo funkcijos veikimo laika (be input'o nuskaitymo/parengimo). Reikta pateikti bendra sumina visa hash'avima laika.
+(Advanced uaduotis - norintiems papildoma bala) Pabandykite kaip amanoma objektyviau palyginti Jasa Hash funkcijos sparta su MD5, SHA-1,
+SHA-256 ar kita gerai ainoma hash funkcija. Paliekame Jums sugalvoti, kaip atlikti toka tyrima objektyviai!
+Susigeneruokite bent 1000 000 atsitiktinia simbolia eiluaia (string'a) pora (apsiribokite iki 5 simbolia eiluaia ilgiu)
+ir patikrinkite, kad visais atvejais gautieji pora hash'ai nesutampa. Tokiu bada bent dalinai asitikinsite, kad Jasa hash funkcija atitinka 6-a reikalavima.
+Susigeneruokite bent 1000 000 atsitiktinia simbolia eiluaia (string'a) pora, tokia kad skirtasi jos tik vienu simboliu
+apsiribokite iki 5 simbolia eiluaia ilgiu) ir avertinkite Jasa gauta hash'a procentina "skirtinguma" bita lygmenyje.
+Iaveskite ia minimalia, maksimalia ir vidurkines "skirtingumo" reikames. Tokiu bada asitikinsite, kaip gerai Jasa hash f
