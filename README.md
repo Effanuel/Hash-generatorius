@@ -60,7 +60,7 @@ cd bin
 - 1-3 - `make run` ir pasirinkite "Kriterijus";
 - 4 - Efektyvumo paskaičiavimas: `make run konstitucija.txt`;
 - 7 - Vidurkinės, minimalios ir maksimalios bitų "skirtingumo" reikšmės 1,000,000 porų:
-
+ ![bits image](https://github.com/Effanuel/Hash-generatorius/blob/master/bits.png)
 
 
 
