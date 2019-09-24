@@ -41,7 +41,7 @@ Hash generatorius Blockchain kursui
 1. GNU C++ Compiler
 
 ## Installation
-1. [Atsisiūskite naujausią versiją.]()
+1. [Atsisiūskite naujausią versiją.](https://github.com/Effanuel/Hash-generatorius/releases/tag/v0.1)
 2. Extract failus.
 3. Per command-line:
 ```
