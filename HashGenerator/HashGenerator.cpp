@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
 				printHashSpeed("konstitucija.txt");
 			}
 			else {
-				for (int i = 1; i < sizeof(argv); ++i) {
+				for (int i = 1; i < argc; ++i) {
 					if (isFileName(string(argv[i]), ".txt")) {
 						printFileHash(string(argv[i]));
 					}
