@@ -23,6 +23,50 @@ bool check_hash_uniqueness(int);
 unsigned int countBits(uint64_t);
 ///-----------------------
 void calculateBits(size_t);
+///-----------------------
+void printStringHash(const string&);
+///-----------------------
+void printFileHash(const string&);
+///-----------------------
+void printHashSpeed(const string&);
+///-----------------------
+bool isFileName(const string&, const string&);
+
+
+bool isFileName(const string& str, const string& suffix) {
+	return str.size() >= suffix.size() &&
+		str.compare(str.size() - suffix.size(), suffix.size(), suffix) == 0;
+}
+
+void printStringHash(const string& input) {
+	Hash algo{ vector<string>{input} };
+	algo.hashInput();
+	std::cout << "String " << input <<" hash:\t" << int_to_hex(algo.getHash()[0]) << std::endl;
+}
+
+void printFileHash(const string& input) {
+	string fileString = Failo_nuskaitymas(input);
+
+	vector<string> input_arr;
+	input_arr.push_back(fileString);
+
+	Hash algo{ input_arr };
+	algo.hashInput();
+
+	std::cout << "File " << input << " hash:\t" << int_to_hex(algo.getHash()[0]) << std::endl;
+}
+
+void printHashSpeed(const string& input) {
+	vector<string> input_arr;
+	input_arr = Failo_eiluciu_nuskaitymas(input);
+	Hash algo{ input_arr };
+
+	Timer laikas;
+	algo.hashInput(); // matuojame hash'inimo laika
+	std::cout << "Failo 'konstitucija.txt' eiluciu hash'inimas:\n" << laikas.elapsed() << " s" << std::endl; //end
+}
+
+
 
 
 int cin_and_checkFormat_in_interval(double a, double b) {
@@ -67,7 +111,7 @@ bool kriterijus() {
 	}
 	Hash algo{ input_arr };
 	algo.hashInput();
-
+	std::cout << "Failu hash'ai: " << std::endl;
 	for (const auto& inp : algo.getHash()) {
 		if (int_to_hex(inp).length() == 16) {
 			std::cout << int_to_hex(inp) << std::endl;
