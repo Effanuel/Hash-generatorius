@@ -35,6 +35,8 @@ Hash generatorius Blockchain kursui
   
 * Funkcionalumas per consolę:
   * `make run`
+  
+  ![console](https://github.com/Effanuel/Hash-generatorius/blob/master/console.png)
 
 
 ---
