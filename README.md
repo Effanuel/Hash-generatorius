@@ -1,6 +1,3 @@
-
-Hash generatorius Blockchain kursui
-
 # Hash-generatorius
 Hash generatorius Blockchain kursui
 ## Reikalavimai
@@ -35,6 +32,8 @@ Hash generatorius Blockchain kursui
   
 * Funkcionalumas per consolę:
   * `make run`
+  
+  ![console](https://github.com/Effanuel/Hash-generatorius/blob/master/console.png)
 
 
 ---
@@ -58,8 +57,8 @@ cd bin
 
 ## Tyrimo analizė
 ### Reikalavimai
-- 1-3 - 
-- 4 - Efektyvumo paskaičiavimas: `make run konstitucija.txt`
+- 1-3 - `make run` ir pasirinkite "Kriterijus";
+- 4 - Efektyvumo paskaičiavimas: `make run konstitucija.txt`;
 - 7 - Vidurkinės, minimalios ir maksimalios bitų "skirtingumo" reikšmės 1,000,000 porų:
 
 
