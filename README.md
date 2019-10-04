@@ -41,7 +41,7 @@ Hash generatorius Blockchain kursui
 1. GNU C++ Compiler
 
 ## Installation
-1. [Atsisiūskite naujausią versiją.]()
+1. [Atsisiūskite naujausią versiją.](https://github.com/Effanuel/Hash-generatorius/releases/tag/v0.1)
 2. Extract failus.
 3. Per command-line:
 ```
@@ -60,7 +60,7 @@ cd bin
 - 1-3 - `make run` ir pasirinkite "Kriterijus";
 - 4 - Efektyvumo paskaičiavimas: `make run konstitucija.txt`;
 - 7 - Vidurkinės, minimalios ir maksimalios bitų "skirtingumo" reikšmės 1,000,000 porų:
-
+ ![bits image](https://github.com/Effanuel/Hash-generatorius/blob/master/bits.png)
 
 
 
