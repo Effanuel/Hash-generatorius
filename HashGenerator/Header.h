@@ -41,7 +41,8 @@ bool isFileName(const string& str, const string& suffix) {
 void printStringHash(const string& input) {
 	Hash algo{ vector<string>{input} };
 	algo.hashInput();
-	std::cout << "String " << input <<" hash:\t" << int_to_hex(algo.getHash()[0]) << std::endl;
+	//std::cout << "String " << input <<" hash:\t" << int_to_hex(algo.getHash()[0]) << std::endl;
+	std::cout << int_to_hex(algo.getHash()[0]);
 }
 
 void printFileHash(const string& input) {
