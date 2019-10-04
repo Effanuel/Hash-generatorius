@@ -1,20 +1,7 @@
 #include "Header.h"
 
-
-
-
 int main(int argc, char *argv[])
 {
-	//vector<string> arr_1;
-	//vector<string> arr_2;
-	//pair_generator(arr_1, arr_2, 1000000);
-	//std::cout << "done" << std::endl;
-	////for (const auto& a: arr_1) {
-	////	std::cout << a << std::endl;
-	////}
-	////for (const auto& b : arr_2) {
-	////	std::cout << b << std::endl;
-	////}
 	vector<string> input_arr;
 	string input;
 	try {
@@ -86,7 +73,7 @@ int main(int argc, char *argv[])
 			}
 			case 6: {
 				std::cout << "Total bits per hash: 64" << std::endl;
-				calculateBits(1e6);
+				calculateBits(1e5);
 				break;
 			}
 			default:

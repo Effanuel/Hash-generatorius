@@ -54,15 +54,16 @@ public:
 	}
 	void hashInput() {
 		ull A;
+		unsigned int j = 0;
 		for (const auto& line : input_) {
-			A = CONSTANTS[1];
+			A = CONSTANTS[j % 8];
 			ull cons = 1;
 			for (unsigned int i = 0; i < line.size(); ++i) {
 				A = (A * __getTotal(line)) ^ (cons * ull(line[i]) * 76963);
 				cons = cons * int(line[i]) % int(1e5 + 1);
 			}
 			hashedInput_.push_back(_mix(A, 0xFEEDFACECAFEBEEF));
-
+			++j;
 		}
 	}
 };
